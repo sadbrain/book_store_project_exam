@@ -12,7 +12,7 @@ class Order extends Model
     use SoftDeletes;
     protected $fillable = [
         'name',
-        'phone_number',
+        'phone',
         'street_address',
         'district_address',
         'city',
@@ -23,6 +23,10 @@ class Order extends Model
         'tracking_number',
         'carrier',
         'user_id',
+        'payment_status',
+        'session_id',
+        'payment_date',
+        'payment_due_date',
     ];
     public function user()
     {

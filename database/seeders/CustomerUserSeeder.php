@@ -23,8 +23,8 @@ class CustomerUserSeeder extends Seeder
         DB::table('users')->insert(
             [  [
                 'name' => 'Company',
-                'email' => 'company@gmail.com',
-                'password' => Hash::make('Company@123'), 
+                'email' => 'Company@gmail.com',
+                'password' => Hash::make('Company@gmail.com'), 
                 'phone'=> '0353537180',// Hash the password
                 'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
                 'district_address'=> 'Sơn Trà',
@@ -37,8 +37,8 @@ class CustomerUserSeeder extends Seeder
             ],
             [
                 'name' => 'Customer',
-                'email' => 'customer@gmail.com',
-                'password' => Hash::make('Customer@123'), 
+                'email' => 'Customer@gmail.com',
+                'password' => Hash::make('Customer@gmail.com'), 
                 'phone'=> '0353537180',
                 'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
                 'district_address'=> 'Sơn Trà',

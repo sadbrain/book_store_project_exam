@@ -15,8 +15,6 @@ class CreateShoppingCartsTable extends Migration
     {
         Schema::create('shopping_carts', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->string('color', 50);
-            $table->string('size', 50);
             $table->unsignedInteger('count')->default(1);
             $table->unsignedDouble('price',14,2)->default(0.0);
             $table->unsignedTinyInteger('product_id')->default(null);

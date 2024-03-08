@@ -22,8 +22,8 @@ class AdminUserSeeder extends Seeder
                 // Create an admin user
         DB::table('users')->insert([ [
             'name' => 'Universe Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('Admin@123'), 
+            'email' => 'Admin@gmail.com',
+            'password' => Hash::make('Admin@gmail.com'), 
             'phone'=> '0353537180',// Hash the password
             'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
             'district_address'=> 'Sơn Trà',
@@ -35,8 +35,8 @@ class AdminUserSeeder extends Seeder
         ],
         [
             'name' => 'Employee',
-            'email' => 'employee@gmail.com',
-            'password' => Hash::make('Employee@123'), 
+            'email' => 'Employee@gmail.com',
+            'password' => Hash::make('Employee@gmail.com'), 
             'phone'=> '0353537180',// Hash the password
             'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
             'district_address'=> 'Sơn Trà',
