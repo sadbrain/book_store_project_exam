@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Customer\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +28,9 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
+});
+Route::middleware('auth')->prefix('customer')->group(function () {
+    Route::get('/cart/summary', [CartController::class, 'summary']);
+    Route::post('/cart/summary', [CartController::class, 'summaryPost']);
+    Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
 });
