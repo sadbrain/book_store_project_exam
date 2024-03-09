@@ -27,6 +27,7 @@ class Order extends Model
         'session_id',
         'payment_date',
         'payment_due_date',
+        'payment_intent_id'
     ];
     public function user()
     {
