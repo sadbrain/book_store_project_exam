@@ -18,5 +18,9 @@ class OrderDetail extends Model
         'product_id',
         'order_id',
     ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class, "product_id");
+    }
     protected $date = ["deleted_at"];
 }

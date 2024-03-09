@@ -49,7 +49,7 @@
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item">Order</a>
+                                        <a  href="/admin/order?status=all" class="dropdown-item">Order</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
@@ -57,7 +57,7 @@
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
-                                        <a href="/admin/user/create"class="dropdown-item">Create User</a>
+                                        <a href="/admin/user/create" class="dropdown-item">Create User</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                 </ul>
@@ -85,6 +85,10 @@
 
                                                 <li class="nav-item">
                                                     <a class="dropdown-item">Profile</a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li class="nav-item">
+                                                    <a  href="/admin/order?status=all" class="dropdown-item">Order Management</a>
                                                 </li>
                                                 <li><hr class="dropdown-divider"></li>
                                                 <li class="nav-item">
