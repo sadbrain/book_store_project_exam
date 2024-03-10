@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
 /*
@@ -45,4 +46,12 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('/order/cancelOrder', [OrderController::class, 'cancelOrder']);
     Route::get('/order/orderConfirmation/{id}', [OrderController::class, 'orderConfirmation']);
 
+
+    Route::get('/product', [ProductController::class, 'index']);
+    Route::get('/product/getAll', [ProductController::class, 'getAll']);
+    Route::get('/product/update/{id}', [ProductController::class, 'update']);
+    Route::post('/product/update', [ProductController::class, 'updatePost']);
+    Route::get('/product/create', [ProductController::class, 'create']);
+    Route::post('/product/create', [ProductController::class, 'createPost']);
+    Route::post('/product/delete/{id}', [ProductController::class, 'deletePost']);
 });

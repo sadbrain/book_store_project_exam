@@ -41,7 +41,7 @@
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item">Product</a>
+                                        <a href="/admin/product" class="dropdown-item">Product</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
