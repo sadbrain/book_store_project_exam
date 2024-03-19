@@ -21,16 +21,21 @@ class ProductController extends CustomerController
         // return view('customer/list-product', ['products' => $products]);
     }
 
-    public function showProduct (){
-        return view ('customer/list-product');
+    public function showProduct()
+    {
+        return view('customer/list-product');
     }
 
-        public function getByCategory($id = null){
-            if ($id == null ){
-                $id = $this->_unitOfWork->category()->get_all()->first()->id;
-            }
-            $products = $this->_unitOfWork->product()->get_all("id = $id")->get()->all();
-            return response()->json(['data'=>$products]);
+    public function getByCategory($id = null)
+    {
+        $query = $this->_unitOfWork->product()->get_all();
+
+        if ($id !== null) {
+            $query->where('category_id', $id);
         }
 
+        $products = $query->get()->all();
+
+        return response()->json(['data' => $products]);
+    }
 }
