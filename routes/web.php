@@ -36,8 +36,7 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
-    Route::get('/product/getAll', [ProductController::class, 'getAll']);
-    Route::get('/listProduct', [ProductController::class, 'showProduct']);
+   
 });
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/order', [OrderController::class, 'index']);

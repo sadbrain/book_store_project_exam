@@ -10,19 +10,23 @@
 </head>
 
 <body>
+    <select class="list-category" class="form-select form-select-sm" aria-label=".form-select-sm example"> 
+
+    </select>
     <div class="container">
         <div class="row" style="display: grid; grid-template-columns: repeat(5, 1fr);">
         </div>
     </div>
 </body>
 <script>
-    // your_script.js
-
+    // List-product
+    function get_product(id = null){
     const productContainer = document.querySelector('.row');
 
-    fetch('/customer/product/getAll')
+        fetch(`http://127.0.0.1:8000/api/customer/product/getByCategory/${id}`)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             const products = data.data;
             let html = '<div class="row" style="display: grid; grid-template-columns: repeat(4, 1fr);">'; // Sử dụng CSS Grid để hiển thị 5 sản phẩm trên một hàng
             products.forEach(product => {
@@ -41,8 +45,40 @@
             productContainer.innerHTML = html;
         })
         .catch(error => {
+            console.error('Error fetching data Product: ', error)
+        });
+    }
+
+
+    //List-category
+
+    const categoryContainer = document.querySelector('.list-category');
+    fetch('/api/customer/listCategory')
+        .then(response => response.json())
+        .then(data => {
+            const category = data.data;
+            let html = '<option selected>Select Category: </option>';
+            let i = 1;
+            category.forEach(category => {
+                if(i=1){
+                    i++;
+                    html += `<option selected value=${category.id}  
+                     >${category.name}</option>`;
+
+                }
+                else{
+                    html += `<option  value=${category.id} >${category.name}</option>`;
+                    
+                }
+            });
+            categoryContainer.innerHTML = html;
+        })
+        .catch(error => {
             console.error('Error fetching data: ', error)
         });
+        get_product();
 </script>
+
+
 
 </html>

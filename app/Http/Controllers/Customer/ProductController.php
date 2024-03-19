@@ -13,6 +13,7 @@ class ProductController extends CustomerController
     public function getAll()
     {
         $products = $this->_unitOfWork->product()->get_all();
+        $products = $products->whereRaw('id < 4')->get()->all();
         foreach ($products as $product) {
             $product["category"] = $product->category;
         }
@@ -23,5 +24,13 @@ class ProductController extends CustomerController
     public function showProduct (){
         return view ('customer/list-product');
     }
+
+        public function getByCategory($id = null){
+            if ($id == null ){
+                $id = $this->_unitOfWork->category()->get_all()->first()->id;
+            }
+            $products = $this->_unitOfWork->product()->get_all("id = $id")->get()->all();
+            return response()->json(['data'=>$products]);
+        }
 
 }
