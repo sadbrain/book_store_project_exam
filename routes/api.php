@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Customer\ShoppingCartController;
+
 /*
 
 |--------------------------------------------------------------------------
@@ -24,4 +26,9 @@ Route::prefix('admin')->group(function () {
     Route::delete('/categories/{id}', [CategoryController::class, 'delete']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
     Route::post('/categories', [CategoryController::class, 'create']);
+});
+
+Route::prefix('customer')->group(function (){
+    Route::get('/show-item-into-cart', [ShoppingCartController::class, 'showItemIntoCart']);
+    Route::post('/add-to-cart/{id}', [ShoppingCartController::class, 'addToCart']);
 });
