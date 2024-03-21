@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ShoppingCartController;
 
 /*
@@ -29,6 +30,8 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function (){
-    Route::get('/show-item-into-cart', [ShoppingCartController::class, 'showItemIntoCart']);
-    Route::post('/add-to-cart/{id}', [ShoppingCartController::class, 'addToCart']);
+    Route::get('/show-item-into-cart', [CartController::class, 'showItemIntoCart']);
+    Route::get('/list-cart-item', [CartController::class, 'getAllFromCart']);
+    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
+    Route::get('/get-product-by-id/{id}', [CartController::class, 'getProductById']);
 });
