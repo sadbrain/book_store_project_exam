@@ -34,4 +34,7 @@ Route::prefix('customer')->group(function (){
     Route::get('/list-cart-item', [CartController::class, 'getAllFromCart']);
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
     Route::get('/get-product-by-id/{id}', [CartController::class, 'getProductById']);
+    Route::get('/plus-cart-count/{id}', [CartController::class, 'plus']);
+    Route::get('/minus-cart-count/{id}', [CartController::class, 'minus']);
+    Route::get('/delete-from-cart/{id}', [CartController::class, 'deleteFromCart']);
 });

@@ -67,6 +67,8 @@
             tr.appendChild(thQuantity);
             tr.appendChild(thPrice);
 
+
+
             // Thêm phần tử <tr> vào <thead>
             const thead = document.querySelector('thead');
             thead.appendChild(tr);
@@ -97,6 +99,7 @@
                         const tdQuantity = document.createElement('td');
                         const tdPrice = document.createElement('td');
 
+
                         // Thiết lập nội dung cho các phần tử
                         tdName.innerHTML = `
                             <div class="card rounded-3 mb-4">
@@ -117,15 +120,21 @@
                             </div>
                         `;
                         tdQuantity.innerHTML = `<div class="col-md-5 col-lg-5 col-xl-2 d-flex">
-                                            <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <input id="form1" min="0" name="quantity" value="${product.count}" type="number" class="form-control form-control-sm" />
-                                            <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>`
+    <button class="btn btn-success px-2" onclick="minusQuantity(${product.product_id})">
+        -
+    </button>
+    <input id="form${product.product_id}" min="0" name="quantity" value="${product.count}" type="number" class="form-control form-control-sm" />
+    <button class="btn btn-warning px-2" onclick="plusQuantity(${product.product_id})">
+        +
+    </button>
+    <button class="btn btn-warning px-2" onclick="deleteCart(${product.product_id})">
+        Delete
+    </button>
+
+    
+</div>`
                         tdPrice.textContent = price;
+                     
 
                         // Gắn các phần tử con vào phần tử cha
                         tr.appendChild(tdName);
@@ -140,6 +149,94 @@
         .catch(error => {
             console.log('Error fetching data Product: ', error);
         });
+
+
+    async function minusQuantity() {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/customer/show-item-into-cart`);
+            const data = await response.json();
+            const products = data.data;
+
+            for (const product of products) {
+                try {
+                    const productResponse = await fetch(`http://127.0.0.1:8000/api/customer/get-product-by-id/${product.product_id}`);
+                    const productData = await productResponse.json();
+                    const {
+                        name,
+                        author,
+                        image_url,
+                        description,
+                        price
+                    } = productData.data;
+
+                    const quantityInput = document.getElementById(`form${product.product_id}`);
+                    quantityInput.stepDown();
+
+                    const minusCountResponse = await fetch(`http://127.0.0.1:8000/api/customer/minus-cart-count/${product.product_id}`);
+                    const minusCountData = await minusCountResponse.json();
+                    const updateCount = minusCountData.count;
+
+                    quantityInput.value = updateCount;
+                } catch (error) {
+                    console.log('Error fetching product details: ', error);
+                }
+            }
+        } catch (error) {
+            console.log('Error fetching cart items: ', error);
+        }
+    }
+
+    async function plusQuantity() {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/customer/show-item-into-cart`);
+            const data = await response.json();
+            const products = data.data;
+
+            for (const product of products) {
+                try {
+                    const productResponse = await fetch(`http://127.0.0.1:8000/api/customer/get-product-by-id/${product.product_id}`);
+                    const productData = await productResponse.json();
+                    const {
+                        name,
+                        author,
+                        image_url,
+                        description,
+                        price
+                    } = productData.data;
+
+                    const quantityInput = document.getElementById(`form${product.product_id}`);
+                    quantityInput.stepDown();
+
+                    const plusCountResponse = await fetch(`http://127.0.0.1:8000/api/customer/plus-cart-count/${product.product_id}`);
+                    const plusCountData = await plusCountResponse.json();
+                    const updateCount = plusCountData.count;
+                    quantityInput.value = updateCount;
+                } catch (error) {
+                    console.log('Error fetching product details: ', error);
+                }
+            }
+        } catch (error) {
+            console.log('Error fetching cart items: ', error);
+        }
+    }
+
+    function deleteCart(product_id) {
+        fetch(`http://127.0.0.1:8000/api/customer/delete-from-cart/${product_id}}`,{
+            method: "DELETE",
+        })   
+    .then(response => {
+        if (response.ok){
+            console.log("OK ")
+        }
+        else{
+            console.log('Failed')
+        }
+    }) 
+    .catch(error => {
+        console.log('Error deleting item: ', error);
+    })
+}
+
 </script>
 
 </html>

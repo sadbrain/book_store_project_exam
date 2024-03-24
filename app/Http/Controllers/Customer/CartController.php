@@ -166,16 +166,36 @@ class CartController extends CustomerController
 
     public function getProductById($id = null)
     {
-        // $query = $this->_unitOfWork->product()->get_all();
-        // if ($id !== null) {
-        //     $query->where('id', $id);
-        // }
-        // $products = $query->get()->all();
-        // dd($products);
-
-        // return response()->json(['data' => $products]);
     $product = $this->_unitOfWork->product()->get("id = $id");
 
     return response()->json(['data' => $product]);
+    }
+
+    public function plus(int $id){
+        $cart = $this->_unitOfWork->cart()->get("id", $id);
+        $cartCount = $cart->count;
+        $cartCount=$cartCount +1;
+        $cart->count = $cartCount ;
+        $cart->save();
+        return response()->json(['data' => $cart]);
+    }
+
+    public function minus(int $id){
+        $cart = $this->_unitOfWork->cart()->get("id", $id);
+        $cartCount = $cart->count;
+        if ($cartCount != 0){
+            $cartCount = $cartCount -1;
+            $cart->count = $cartCount ;
+        }
+        $cart->save();
+        return response()->json(['data' => $cart]);
+    }
+
+    public function deleteFromCart($id){
+        $cart = $this->_unitOfWork->cart()->get("id", $id);
+        if ($cart){
+            $cart->delete();
+        }
+        return view('customer/cart/list-cart')->with('msg','Delete successfull');
     }
 }
