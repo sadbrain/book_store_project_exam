@@ -40,7 +40,7 @@ class ProductController extends AdminController
             }
 
             $file->move($folderpath, $filename);
-            $product -> image_url = $foldername . $filename;
+            $product -> image_url = $foldername ."/". $filename;
             $this->_unitOfWork->product()->update($product);
 
         }
@@ -96,7 +96,20 @@ class ProductController extends AdminController
         if (!$product) {
             abort(404, 'Product not found');
         }
+        
+        $foldername = "/images/product/product-".$product->id;
+        $folderpath  = public_path($foldername);
+        
+        if(file_exists($folderpath)){
+            $existingFiles = File::files($folderpath);
+            foreach ($existingFiles as $existingFile) {
+                File::delete($existingFile);
+            }
+            File::deleteDirectory($folderpath);
+        }
+
         $this->_unitOfWork->product()->delete($product);
+        
         return response() -> json([ "success" => true, "message" => "Product deleted successfully" ]);
     }
 }
