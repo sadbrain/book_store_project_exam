@@ -24,10 +24,14 @@
 
                         
                         <div class="form-floating col-12 py-2">
-                            <input value ="{{$product->description}}" name="description" class="form-control border-0 shadow" />
+                            <input  name="description" class="form-control border-0 shadow" />
                             <label  class="ms-2">Description</label>
                         </div>
 
+                        <div class="form-floating col-12 py-2">
+                            <textarea  value ="{{$product->description}}" name="description" class="form-control border-0 shadow" >{{$product->description}}</textarea>
+                            <label  class="ms-2 text-muted">Description</label>
+                        </div>
                         
                         <div class="form-floating col-12 py-2">
                             <input value ="{{$product->isbn}}" name="isbn" class="form-control border-0 shadow" />
@@ -106,4 +110,13 @@
     </div>
 </div>  
 
+@endsection
+@section('content-scripts')
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons  lists   table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough |  align lineheight | numlist bullist indent outdent',
+        });
+    </script>
 @endsection
