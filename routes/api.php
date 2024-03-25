@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('customer')->group(function (){
     Route::get('/show-item-into-cart', [CartController::class, 'showItemIntoCart']);
-    Route::get('/list-cart-item', [CartController::class, 'getAllFromCart']);
+    Route::get('/list-cart-item', [CartController::class, 'getAllFromCart'])->name('api.cart.list');
     Route::post('/add-to-cart', [CartController::class, 'addToCart']);
     Route::get('/get-product-by-id/{id}', [CartController::class, 'getProductById']);
     Route::get('/plus-cart-count/{id}', [CartController::class, 'plus']);
