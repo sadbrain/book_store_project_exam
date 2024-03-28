@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\ProductController;
+// use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
 /*
@@ -35,6 +36,7 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
+   
 });
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/order', [OrderController::class, 'index']);

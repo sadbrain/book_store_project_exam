@@ -10,7 +10,7 @@ class CategoryController extends AdminController
 {  
    
     public function getAll(){
-        $categories = $this->_unitOfWork->category()->get_all();
+        $categories = $this->_unitOfWork->category()->get_all()->get()->all();
         return response()->json(["data" => $categories]);
 
     }
