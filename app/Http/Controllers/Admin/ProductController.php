@@ -17,7 +17,6 @@ class ProductController extends AdminController
             $product["category"] = $product->category;
         }
         return response()->json(["data" => $products]);
-
     }
     public function create(){
         $categories = $this->_unitOfWork->category()->get_all();
