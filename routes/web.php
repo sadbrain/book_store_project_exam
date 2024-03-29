@@ -27,16 +27,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
-Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/user/create', [UserController::class, 'register']);
-    Route::post('/user/create', [UserController::class, 'registerPost']);
-});
+
 Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
+
+});
+Route::prefix('customer')->group(function () {
+    Route::get('/detail/{id}', [HomeController::class, 'detail']);
+
 });
 Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/user/create', [UserController::class, 'register']);
+    Route::post('/user/create', [UserController::class, 'registerPost']);
     Route::get('/order', [OrderController::class, 'index']);
     Route::get('/order/detail/{id}', [OrderController::class, 'detail']);
     Route::post('/order/detail', [OrderController::class, 'detailPost']);
