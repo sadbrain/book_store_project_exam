@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="/cust/detail/{{$product->id}}"
+                            <a href="/customer/detail/{{$product->id}}"
                                class="btn btn-primary bg-gradient border-0 form-control">
                                 Details
                             </a>

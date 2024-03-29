@@ -12,14 +12,14 @@ class ProductController extends AdminController
         return view('admin/product/index');
     }
     public function getAll(){
-        $products = $this->_unitOfWork->product()->get_all();
+        $products = $this->_unitOfWork->product()->get_all()->get()->all();
         foreach($products as $product){
             $product["category"] = $product->category;
         }
         return response()->json(["data" => $products]);
     }
     public function create(){
-        $categories = $this->_unitOfWork->category()->get_all();
+        $categories = $this->_unitOfWork->category()->get_all()->get()->all();
         return view('admin/product/create', compact('categories'));
     }
     public function createPost(Request $request){
@@ -49,7 +49,7 @@ class ProductController extends AdminController
 
     public function update(int $id){
         $product = $this->_unitOfWork->product()->get("id = $id");
-        $categories = $this->_unitOfWork->category()->get_all();
+        $categories = $this->_unitOfWork->category()->get_all()->get()->all();
         return view('admin/product/update', compact('product' ,'categories'));
     }
 

@@ -22,11 +22,7 @@
                             <label  class="ms-2">Name</label>
                         </div>
 
-                        
-                        <div class="form-floating col-12 py-2">
-                            <input  name="description" class="form-control border-0 shadow" />
-                            <label  class="ms-2">Description</label>
-                        </div>
+       
 
                         <div class="form-floating col-12 py-2">
                             <textarea  value ="{{$product->description}}" name="description" class="form-control border-0 shadow" >{{$product->description}}</textarea>

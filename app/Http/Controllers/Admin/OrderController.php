@@ -24,38 +24,38 @@ class OrderController extends AdminController
         if ($user->role->name == $roles["user_admin"] || $user->role->name == $roles["user_employee"]) {
             switch ($status) {
                 case "pending":
-                    $orders = $this->_unitOfWork->order()->get_all("payment_status = '{$payment_status['delayed_payment']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("payment_status = '{$payment_status['delayed_payment']}'")->get()->all();
                     break;
                 case "inprocess":
-                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['in_process']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['in_process']}'")->get()->all();
                     break;
                 case "completed":
-                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['shipped']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['shipped']}'")->get()->all();
                     break;
                 case "approved":
-                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['approved']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("order_status = '{$order_status['approved']}'")->get()->all();
 
                     break;
                 default:
-                    $orders = $this->_unitOfWork->order()->get_all();
+                    $orders = $this->_unitOfWork->order()->get_all()->get()->all();
                     break;
             }
         } else {
             switch ($status) {
                 case "pending":
-                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND payment_status = '{$payment_status['delayed_payment']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND payment_status = '{$payment_status['delayed_payment']}'")->get()->all();
                     break;
                 case "inprocess":
-                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['in_process']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['in_process']}'")->get()->all();
                     break;
                 case "completed":
-                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['shipped']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['shipped']}'")->get()->all();
                     break;
                 case "approved":
-                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['approved']}'");
+                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id AND order_status = '{$order_status['approved']}'")->get()->all();
                     break;
                 default:
-                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id");
+                    $orders = $this->_unitOfWork->order()->get_all("user_id = $user->id")->get()->all();
                     break;
             }
         }
@@ -66,7 +66,7 @@ class OrderController extends AdminController
 
     public function detail(int $id){
         $order = $this->_unitOfWork->order()->get("id = $id");
-        $order_details = $this->_unitOfWork->order_detail()->get_all("order_id = $id");
+        $order_details = $this->_unitOfWork->order_detail()->get_all("order_id = $id")->get()->all();
 
         return view('admin/order/detail', compact("order","order_details"));
     }
@@ -127,7 +127,7 @@ class OrderController extends AdminController
         if (!$order) {
             abort(404, 'Order not found');
         }
-        $order_details = $this->_unitOfWork->order_detail()->get_all("order_id = $orderId");
+        $order_details = $this->_unitOfWork->order_detail()->get_all("order_id = $orderId")->get()->all();
 
         $domain = $request->getSchemeAndHttpHost();
         Stripe::setApiKey(config('stripe.sk'));

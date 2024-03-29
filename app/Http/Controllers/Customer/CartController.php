@@ -16,7 +16,7 @@ class CartController extends CustomerController
        $user = Auth::user();
        $order = new \App\Models\Order();
 
-       $shopping_carts = $this->_unitOfWork->cart()->get_all("user_id =". $user -> id);
+       $shopping_carts = $this->_unitOfWork->cart()->get_all("user_id =". $user -> id)->get()->all();
        foreach ($shopping_carts as $cart){
          $cart -> price = $this -> get_price_based_on_quanity($cart);
          $order -> order_total += $cart -> price * $cart -> count;
@@ -39,7 +39,7 @@ class CartController extends CustomerController
         $order->user_id = $user->id;
         $order->order_date = now();
 
-        $shopping_carts = $this->_unitOfWork->cart()->get_all("user_id =". $user->id);
+        $shopping_carts = $this->_unitOfWork->cart()->get_all("user_id =". $user->id)->get()->all();
         foreach ($shopping_carts as $cart){
             $cart -> price = $this -> get_price_based_on_quanity($cart);
             $order -> order_total += $cart -> price * $cart -> count;

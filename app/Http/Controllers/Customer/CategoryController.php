@@ -11,7 +11,7 @@ class CategoryController extends CustomerController
 {
     //
     public function getAll(){
-        $category = $this->_unitOfWork->category()->get_all();
+        $category = $this->_unitOfWork->category()->get_all()->get()->all();
         return response()->json(['data'=>$category]);
     }
 }
