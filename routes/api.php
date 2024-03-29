@@ -18,9 +18,9 @@ use App\Http\Controllers\Customer\ShoppingCartController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::prefix('admin')->group(function () {
     Route::get('/categories', [CategoryController::class, 'getAll']);
     Route::get('/categories/{id}', [CategoryController::class, 'get']);
@@ -30,9 +30,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function (){
-    Route::get('/show-item-into-cart', [CartController::class, 'showItemIntoCart']);
-    Route::get('/list-cart-item', [CartController::class, 'getAllFromCart'])->name('api.cart.list');
-    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
     Route::get('/get-product-by-id/{id}', [CartController::class, 'getProductById']);
     Route::get('/plus-cart-count/{id}', [CartController::class, 'plus']);
     Route::get('/minus-cart-count/{id}', [CartController::class, 'minus']);

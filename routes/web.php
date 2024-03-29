@@ -35,6 +35,9 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
+    Route::get('/cart', [CartController::class, 'getAllFromCart'])->name('listCart');
+    Route::get('/show-item-into-cart', [CartController::class, 'showItemIntoCart']);
+    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
 });
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/order', [OrderController::class, 'index']);

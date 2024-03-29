@@ -41,7 +41,7 @@
                         </li>
 
                         <li class="nav-item">
-                        <a  class="nav-link" href="{{ route('api.cart.list') }}">List Cart</a>
+                        <a  class="nav-link" href="{{ route('listCart') }}">Cart</a>
                         </li>
 
                         @if(Auth::user() && Auth::user()->role->name == config("constants.role.user_admin"))

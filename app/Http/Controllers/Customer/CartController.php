@@ -131,21 +131,22 @@ class CartController extends CustomerController
 
     public function showItemIntoCart()
     {
-        $products = $this->_unitOfWork->cart()->get_all(); 
+        $user = Auth::user();
+        $user_id = $user->id;
+        $products = $this->_unitOfWork->cart()->get_all("user_id =" . $user_id);
         return response()->json(['data' => $products]);
     }
-    
-
     public function getAllFromCart(){
         return view ("customer/cart/list-cart");
     }
 
     public function addToCart(Request $request)
     {
-        $user_id = 4;
+        $users =Auth::user();
+        $user_id = $users->id;
         $product_id = $request->product_id;
         $count = $request->count;
-        $cart = ShoppingCart::where('user_id', $user_id)
+        $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
             ->where('product_id', $product_id)
             ->first();
         if ($cart) {
@@ -183,7 +184,7 @@ class CartController extends CustomerController
     public function minus(int $id){
         $cart = $this->_unitOfWork->cart()->get("id", $id);
         $cartCount = $cart->count;
-        if ($cartCount != 0){
+        if ($cartCount != 1){
             $cartCount = $cartCount -1;
             $cart->count = $cartCount ;
         }

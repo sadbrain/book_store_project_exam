@@ -1,32 +1,33 @@
 @extends('shared/_layout')
 @section('content')
-<section class="h-100 h-custom">
-    <div class="container h-50 py-5">
-        <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="col">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            </tr>
-                        </thead>
-                        <form action="" method="POST">
-                            <tbody>
-                            </tbody>
-                        </form>
-                    </table>
-                </div>
-            </div>
+
+
+<h1 class="text-center mb-10">Cart</h1>
+<div class="d-flex justify-content-center align-items-center ">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <form action="" method="POST">
+                    <tbody>
+                    </tbody>
+                </form>
+            </table>
         </div>
     </div>
-</section>
+</div>
+
+
 
 @endsection
 
 @section('content-scripts')
 <script>
     const tableBody = document.querySelector('tbody');
-    fetch(`http://127.0.0.1:8000/api/customer/show-item-into-cart`)
+    fetch(`http://127.0.0.1:8000/customer/show-item-into-cart`)
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -105,14 +106,14 @@
                             </div>
                         `;
                         tdQuantity.innerHTML = `<div class="col-md-5 col-lg-5 col-xl-2 d-flex">
-    <button class="btn btn-success px-2 m-lg-2" onclick="minusQuantity(${product.id})">
+    <button class="btn btn-success px-2 m-lg-2" onclick="minusQuantity(${product.product_id})">
         -
     </button>
     <input id="form${product.product_id}" min="0" name="quantity" value="${product.count}" type="number" class="form-control" style ="width: 80px; height: 45px" placeholder="${product.count}" />
-    <button class="btn btn-warning px-2 m-lg-2" onclick="plusQuantity(${product.id})">
+    <button class="btn btn-warning px-2 m-lg-2" onclick="plusQuantity(${product.product_id})">
         +
     </button>
-    <button class="btn btn-warning px-2 m-lg-2" onclick="deleteCart(${product.id})">
+    <button class="btn btn-warning px-2 m-lg-2" onclick="deleteCart(${product.product_id})">
         Delete
     </button>
 
@@ -150,7 +151,7 @@
                 }
             })
             .catch(error => {
-                console.log('Error deleting item: ', error);
+                console.log('Error deleting item: ', error)
             })
     }
 
@@ -160,15 +161,19 @@
             })
             .then(response => {
                 if (response.ok) {
-                    console.log("Minus Ok")
+                    // Yêu cầu thành công, cập nhật giá trị số lượng trên giao diện người dùng
+                    const quantityInput = document.getElementById(`form${product_id}`);
+                    quantityInput.value = parseInt(quantityInput.value) - 1;
+                    console.log(product_id);
+                    console.log("Minus Ok");
                 } else {
-                    console.log(product_id)
-                    console.log("Minus Failed")
+                    console.log(product_id);
+                    console.log("Minus Failed");
                 }
             })
             .catch(error => {
-                console.log("Error Minusting: ", error)
-            })
+                console.log("Error Minusting: ", error);
+            });
     }
 
     function plusQuantity(product_id) {
@@ -177,10 +182,14 @@
             })
             .then(response => {
                 if (response.ok) {
-                    console.log("plus Ok")
+                    // Yêu cầu thành công, cập nhật giá trị số lượng trên giao diện người dùng
+                    const quantityInput = document.getElementById(`form${product_id}`);
+                    quantityInput.value = parseInt(quantityInput.value) + 1;
+                    console.log(product_id);
+                    console.log("Minus Ok");
                 } else {
-                    console.log(product_id)
-                    console.log("plus Failed")
+                    console.log(product_id);
+                    console.log("Minus Failed");
                 }
             })
             .catch(error => {
