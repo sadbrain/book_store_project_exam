@@ -30,8 +30,8 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function (){
-    Route::get('/get-product-by-id/{id}', [CartController::class, 'getProductById']);
-    Route::get('/plus-cart-count/{id}', [CartController::class, 'plus']);
-    Route::get('/minus-cart-count/{id}', [CartController::class, 'minus']);
-    Route::get('/delete-from-cart/{id}', [CartController::class, 'deleteFromCart']);
+    Route::get('/cart/{id}', [CartController::class, 'getProductById']);
+    Route::get('/cart/plus/{id}', [CartController::class, 'plus']);
+    Route::get('/cart/minus/{id}', [CartController::class, 'minus']);
+    Route::get('/cart/delete/{id}', [CartController::class, 'deleteFromCart']);
 });

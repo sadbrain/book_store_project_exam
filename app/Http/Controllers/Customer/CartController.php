@@ -136,16 +136,18 @@ class CartController extends CustomerController
         $products = $this->_unitOfWork->cart()->get_all("user_id =" . $user_id);
         return response()->json(['data' => $products]);
     }
-    public function getAllFromCart(){
-        return view ("customer/cart/list-cart");
+    public function getAllFromCart()
+    {
+        return view("customer/cart/list-cart");
     }
 
     public function addToCart(Request $request)
     {
-        $users =Auth::user();
+        $users = Auth::user();
         $user_id = $users->id;
-        $product_id = $request->product_id;
+        $product_id = $request->input('product_id');
         $count = $request->count;
+        $price = $request->price;
         $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
             ->where('product_id', $product_id)
             ->first();
@@ -158,45 +160,57 @@ class CartController extends CustomerController
             $cart = new ShoppingCart();
             $cart->user_id = $user_id;
             $cart->product_id = $product_id;
-            $price = $this->get_price_based_on_quanity($cart);
             $cart->count = $count;
             $cart->price = $price;
             $cart->save();
+            $cart->price = $this->get_price_based_on_quanity($cart);
+            $cart->save();
         }
+
+        return back()->with('msg', 'Add to cart thanh cong');
     }
 
     public function getProductById($id = null)
     {
-    $product = $this->_unitOfWork->product()->get("id = $id");
+        $product = $this->_unitOfWork->product()->get("id = $id");
 
-    return response()->json(['data' => $product]);
+        return response()->json(['data' => $product]);
     }
 
-    public function plus(int $id){
-        $cart = $this->_unitOfWork->cart()->get("id", $id);
-        $cartCount = $cart->count;
-        $cartCount=$cartCount +1;
-        $cart->count = $cartCount ;
-        $cart->save();
-        return response()->json(['data' => $cart]);
-    }
-
-    public function minus(int $id){
-        $cart = $this->_unitOfWork->cart()->get("id", $id);
-        $cartCount = $cart->count;
-        if ($cartCount != 1){
-            $cartCount = $cartCount -1;
-            $cart->count = $cartCount ;
+    public function plus($id)
+    {
+        $cart = $this->_unitOfWork->cart()->get("id = $id");
+        if ($cart) {
+            $cart->count += 1;
+            $cart->save();
+            $cart->price = $cart->count * $cart->product->price;
+            $cart->save(); // Lưu giá mới vào cơ sở dữ liệu
+            return response()->json(['data' => ['count' => $cart->count, 'price' => $cart->price]], 200);
+        } else {
+            return response()->json(['error' => 'Cart not found'], 404);
         }
-        $cart->save();
-        return response()->json(['data' => $cart]);
     }
 
-    public function deleteFromCart($id){
-        $cart = $this->_unitOfWork->cart()->get("id", $id);
-        if ($cart){
+    public function minus($id)
+    {
+        $cart = $this->_unitOfWork->cart()->get("id = $id");
+        if ($cart) {
+            $cart->count -= 1;
+            $cart->save();
+            $cart->price = $cart->count * $cart->product->price;
+            $cart->save(); // Lưu giá mới vào cơ sở dữ liệu
+            return response()->json(['data' => ['count' => $cart->count, 'price' => $cart->price]], 200);
+        } else {
+            return response()->json(['error' => 'Cart not found'], 404);
+        }
+    }
+
+    public function deleteFromCart($id)
+    {
+        $cart = $this->_unitOfWork->cart()->get("id = $id");
+        if ($cart) {
             $cart->delete();
         }
-        return view('customer/cart/list-cart')->with('msg','Delete successfull');
+        return view('customer/cart/list-cart')->with('msg', 'Delete successfull');
     }
 }

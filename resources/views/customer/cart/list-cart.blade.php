@@ -27,7 +27,7 @@
 @section('content-scripts')
 <script>
     const tableBody = document.querySelector('tbody');
-    fetch(`http://127.0.0.1:8000/customer/show-item-into-cart`)
+    fetch(`http://127.0.0.1:8000/customer/cart/show`)
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -60,7 +60,7 @@
             thead.appendChild(tr);
 
             products.forEach(product => {
-                fetch(`http://127.0.0.1:8000/api/customer/get-product-by-id/${product.product_id}`)
+                fetch(`http://127.0.0.1:8000/api/customer/cart/${product.product_id}`)
                     .then(response => response.json())
                     .then(productData => {
                         const {
@@ -106,20 +106,20 @@
                             </div>
                         `;
                         tdQuantity.innerHTML = `<div class="col-md-5 col-lg-5 col-xl-2 d-flex">
-    <button class="btn btn-success px-2 m-lg-2" onclick="minusQuantity(${product.product_id})">
+    <button class="btn btn-success px-2 m-lg-2" onclick="minusQuantity(${product.id})">
         -
     </button>
-    <input id="form${product.product_id}" min="0" name="quantity" value="${product.count}" type="number" class="form-control" style ="width: 80px; height: 45px" placeholder="${product.count}" />
-    <button class="btn btn-warning px-2 m-lg-2" onclick="plusQuantity(${product.product_id})">
+    <input id="form${product.id}" min="0" name="quantity" value="${product.count}" type="number" class="form-control" style ="width: 80px; height: 45px" placeholder="${product.count}" />
+    <button class="btn btn-warning px-2 m-lg-2" onclick="plusQuantity(${product.id})">
         +
     </button>
-    <button class="btn btn-warning px-2 m-lg-2" onclick="deleteCart(${product.product_id})">
+    <button class="btn btn-warning px-2 m-lg-2" onclick="deleteCart(${product.id})">
         Delete
     </button>
 
     
 </div>`
-                        tdPrice.textContent = price;
+                        tdPrice.innerHTML = `<span id="price${product.id}">${product.price}</span>`;
 
 
                         // Gắn các phần tử con vào phần tử cha
@@ -137,8 +137,8 @@
         });
 
 
-    function deleteCart(product_id) {
-        fetch(`http://127.0.0.1:8000/api/customer/delete-from-cart/${product_id}`, {
+    function deleteCart(cart_id) {
+        fetch(`http://127.0.0.1:8000/api/customer/cart/delete/${cart_id}`, {
                 method: "GET",
             })
             .then(response => {
@@ -146,7 +146,7 @@
                     window.location.reload();
                     console.log("Delete OK ")
                 } else {
-                    console.log(product_id)
+                    console.log(cart_id)
                     console.log('Delete Failed')
                 }
             })
@@ -155,42 +155,50 @@
             })
     }
 
-    function minusQuantity(product_id) {
-        fetch(`http://127.0.0.1:8000/api/customer/minus-cart-count/${product_id}`, {
-                method: "GET"
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Yêu cầu thành công, cập nhật giá trị số lượng trên giao diện người dùng
-                    const quantityInput = document.getElementById(`form${product_id}`);
-                    quantityInput.value = parseInt(quantityInput.value) - 1;
-                    console.log(product_id);
-                    console.log("Minus Ok");
-                } else {
-                    console.log(product_id);
-                    console.log("Minus Failed");
+    function minusQuantity(cart_id) {
+        fetch(`http://127.0.0.1:8000/api/customer/cart/minus/${cart_id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
                 }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Cập nhật số lượng trong giao diện người dùng
+                const quantityInput = document.getElementById(`form${cart_id}`);
+                const priceInput = document.getElementById(`price${cart_id}`);
+                if (quantityInput && priceInput) {
+                    if (quantityInput && priceInput) {
+                        quantityInput.value = parseInt(quantityInput.value) - 1;
+                        priceInput.textContent = data.data.price;
+                    }
+                }
+                console.log("Minus Ok");
             })
             .catch(error => {
-                console.log("Error Minusting: ", error);
-            });
+                console.log("Error minusting: ", error)
+            })
     }
 
-    function plusQuantity(product_id) {
-        fetch(`http://127.0.0.1:8000/api/customer/plus-cart-count/${product_id}`, {
-                method: "GET"
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Yêu cầu thành công, cập nhật giá trị số lượng trên giao diện người dùng
-                    const quantityInput = document.getElementById(`form${product_id}`);
-                    quantityInput.value = parseInt(quantityInput.value) + 1;
-                    console.log(product_id);
-                    console.log("Minus Ok");
-                } else {
-                    console.log(product_id);
-                    console.log("Minus Failed");
+    function plusQuantity(cart_id) {
+        fetch(`http://127.0.0.1:8000/api/customer/cart/plus/${cart_id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
                 }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Cập nhật số lượng trong giao diện người dùng
+                const quantityInput = document.getElementById(`form${cart_id}`);
+                const priceInput = document.getElementById(`price${cart_id}`);
+                if (quantityInput && priceInput) {
+                    if (quantityInput && priceInput) {
+                        quantityInput.value = parseInt(quantityInput.value) + 1;
+                        priceInput.textContent = data.data.price;
+                    }
+                }
+                console.log("Plus Ok");
             })
             .catch(error => {
                 console.log("Error plusting: ", error)

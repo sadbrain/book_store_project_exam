@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Customer\ProductControllers;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
 /*
@@ -36,8 +37,10 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
     Route::get('/cart', [CartController::class, 'getAllFromCart'])->name('listCart');
-    Route::get('/show-item-into-cart', [CartController::class, 'showItemIntoCart']);
-    Route::post('/add-to-cart', [CartController::class, 'addToCart']);
+    Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('/cart/add');
+
+    Route::get('/product/detail/{id}',[ProductControllers::class, 'show']);
 });
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/order', [OrderController::class, 'index']);
