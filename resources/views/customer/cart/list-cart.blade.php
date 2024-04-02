@@ -1,7 +1,10 @@
 @extends('shared/_layout')
 @section('content')
-
-
+@if(session()->has('msg'))
+<div class="alert alert-success">
+    {{ session('msg') }}
+</div>
+@endif
 <h1 class="text-center mb-10">Cart</h1>
 <div class="d-flex justify-content-center align-items-center ">
     <div class="col">
@@ -19,9 +22,6 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('content-scripts')

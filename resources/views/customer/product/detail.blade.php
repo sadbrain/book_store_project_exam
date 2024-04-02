@@ -1,6 +1,9 @@
 @extends("shared/_layout")
 @section('content')
-<form method="post" action="{{ route('/cart/add', ['id' => $product->id]) }}">
+@if(session()->has('msg'))
+<div class="alert alert-success">{{ session('msg') }}</div>
+@endif
+<form method="POST" action="{{ route('/cart/add', ['id' => $product->id])}}">
     @csrf
     <input type="hidden" name="product_id" value="{{ $product->id }}">.
     <div class="card shadow border-0 mt-4 mb-4">
@@ -21,40 +24,50 @@
                     <div class="py-3">
                         <!-- Các thông tin khác về sản phẩm -->
                         <div class="row">
-                            <div class="col-6 col-md-2 offset-lg-1 pb-1">
-                                <a href="" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
-                                    <small>Back to home</small>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-12 col-lg-6 offset-lg-1">
                                 <div class="col-12 col-md-6 pb-4">
-                                    <span class="badge fs-2">Price: {{$product->price}}</span>
+                                    <h4>Price: {{$product->price}}</h4>
+                                    <input name="price" value="{{$product->price}}" type="hidden">
                                 </div>
                                 <div class="row ps-2">
-                                    <h6 class="text-dark text-opacity-50 pb-2">
+                                    <h4 class="text-dark text-opacity-50 pb-2">
                                         List Price:
-                                        <span class="text-decoration-line-through fs-2">
+                                        <h4 class="text-decoration-line-through fs-2">
                                             {{$product->list_price}}
-                                        </span>
-                                    </h6>
-                                </div>
-                                <div class="row">
-                                    <h3 class="text-dark"> ISBN: {{$product->isbn}}</h3>
+                                        </h4>
+                                    </h4>
                                 </div>
                                 <div class="row ">
-                                    <h6 class="text-dark  ">{{$product->description}}</h6>
+                                    <h4 class="text-dark"> ISBN: {{$product->isbn}}</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-lg-5 col-xl-2">
+                                        <div class="d-flex">
+                                            <input min="1" name="count" type="number" class="form-control" style="width: 80px; height: 45px" placeholder="1" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 col-lg-7 col-xl-10">
+                                        <div class="row">
+                                            <h4 class="text-dark">{{$product->description}}</h4>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit" >Add to cart</button>
+                <div class="d-flex justify-content-between">
+                    <div class="text-left">
+                        <a href="/" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
+                            Back to home
+                        </a>
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">Add to cart</button>
+                    </div>
+                </div>
             </div>
-           
         </div>
     </div>
-    
 </form>
 @endsection

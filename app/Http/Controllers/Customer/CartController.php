@@ -146,14 +146,18 @@ class CartController extends CustomerController
         $users = Auth::user();
         $user_id = $users->id;
         $product_id = $request->input('product_id');
-        $count = $request->count;
-        $price = $request->price;
+        $count = $request->input('count');
+        $price = $request->input('price');
+        if (empty($count)){
+            $count = 1;
+        }
         $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
             ->where('product_id', $product_id)
             ->first();
         if ($cart) {
             //San pham da ton tai
             $cart->count = $count;
+            $cart->price = $price;
             $cart->save();
         } else {
             //San pham chua ton tai
@@ -163,11 +167,9 @@ class CartController extends CustomerController
             $cart->count = $count;
             $cart->price = $price;
             $cart->save();
-            $cart->price = $this->get_price_based_on_quanity($cart);
             $cart->save();
         }
-
-        return back()->with('msg', 'Add to cart thanh cong');
+        return back()->with('msg', 'Add to cart successful');
     }
 
     public function getProductById($id = null)
