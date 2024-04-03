@@ -24,6 +24,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'Universe Admin',
             'email' => 'Admin@gmail.com',
             'password' => Hash::make('Admin@gmail.com'), 
+            'lock' =>'1',
             'phone'=> '0353537180',// Hash the password
             'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
             'district_address'=> 'Sơn Trà',
@@ -37,6 +38,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'Employee',
             'email' => 'Employee@gmail.com',
             'password' => Hash::make('Employee@gmail.com'), 
+            'lock' =>'1',
             'phone'=> '0353537180',// Hash the password
             'street_address'=> '99 Tô Hiến Thành, Lê Hữu Trác',
             'district_address'=> 'Sơn Trà',

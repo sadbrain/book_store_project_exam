@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Admin\UserController;
 
 
 /*
@@ -26,7 +27,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/categories/{id}', [CategoryController::class, 'get']);
     Route::delete('/categories/{id}', [CategoryController::class, 'delete']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::post('/categories', [CategoryController::class, 'create']);
+    Route::post('/categories', [CategoryController::class, 'create']); 
+    Route::get('/users/getall', [UserController::class, 'getAll']);
 });
 
 Route::prefix('customer')->group(function () {

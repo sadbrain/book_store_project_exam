@@ -52,5 +52,18 @@ class UserController extends AdminController
         session()->flash('message.success', 'User created successfully');
         return redirect("/admin/user/create");
     }
+
+    public function index(){
+        return view('admin/user/listUsers');
+    }
+
+    public function getAll(){
+        $users = $this->_unitOfWork->user()->get_all();
+        $users = $users
+        ->with('company')
+        ->with('role')
+        ->get()->all();
+        return response()->json(["data" => $users]);
+    }
    
 }

@@ -41,6 +41,8 @@ Route::prefix('customer')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
+    Route::get('/users', [UserController::class, 'index']);
+
     Route::get('/order', [OrderController::class, 'index']);
     Route::get('/order/detail/{id}', [OrderController::class, 'detail']);
     Route::post('/order/detail', [OrderController::class, 'detailPost']);
