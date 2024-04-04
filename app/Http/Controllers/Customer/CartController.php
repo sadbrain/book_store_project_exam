@@ -133,7 +133,7 @@ class CartController extends CustomerController
     {
         $user = Auth::user();
         $user_id = $user->id;
-        $products = $this->_unitOfWork->cart()->get_all("user_id =" . $user_id);
+        $products = $this->_unitOfWork->cart()->get_all("user_id = $user_id");
         return response()->json(['data' => $products]);
     }
     public function getAllFromCart()
@@ -145,40 +145,20 @@ class CartController extends CustomerController
     {
         $users = Auth::user();
         $user_id = $users->id;
-        // $product_id = $request->input('product_id');
-        // $count = $request->input('count');
-        // $price = $request->input('price');
-        $product_data = $request->all();
-        // if (empty($product_data->count)) {
-        //     $product_data->count = 1;
-        // }
-        // $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
-        //     ->where('product_id', $product_id)
-        //     ->first();
-
-        $cart = $this->_unitOfWork->cart()->get("user_id = $user_id", "product_id = $product_data[product_id]");
+        $product = $request->input("cart");
+        $cart = $this->_unitOfWork->cart()->get("user_id = $user_id and product_id = {$product['product_id']}");
         if ($cart) {
-            //San pham da ton tai
-            // $cart->count = $count;
-            // $cart->price = $price;
-            // $cart->save();
-            $cart->count += $product_data['count'];
-            $cart->price = $product_data['price'];
-            $cart->update();
+            $cart->fill($product);
+            $this->_unitOfWork->cart()->update($cart);
         } else {
-            //San pham chua ton tai
-            // $cart = new ShoppingCart();
-            // $cart->user_id = $user_id;
-            // $cart->product_id = $product_id;
-            // $cart->count = $count;
-            // $cart->price = $price;
-            // $cart->save();
-            // $cart->save();
             $cart = new \App\Models\ShoppingCart;
             $cart->user_id = $user_id;
-            $cart->fill($product_data);
-            $cart->save();
+            $cart->fill($product);
+            $this->_unitOfWork->cart()->add($cart);
+
         }
+        session()->flash('message.success', 'Add to cart successful ');
+
         return back()->with('msg', 'Add to cart successful');
     }
 
