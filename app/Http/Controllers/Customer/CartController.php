@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Customer\CustomerController;
-use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use App\Http\Controllers\Customer\DB;
+
 
 class CartController extends CustomerController
 {
@@ -145,28 +145,38 @@ class CartController extends CustomerController
     {
         $users = Auth::user();
         $user_id = $users->id;
-        $product_id = $request->input('product_id');
-        $count = $request->input('count');
-        $price = $request->input('price');
-        if (empty($count)){
-            $count = 1;
-        }
-        $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
-            ->where('product_id', $product_id)
-            ->first();
+        // $product_id = $request->input('product_id');
+        // $count = $request->input('count');
+        // $price = $request->input('price');
+        $product_data = $request->all();
+        // if (empty($product_data->count)) {
+        //     $product_data->count = 1;
+        // }
+        // $cart = ShoppingCart::where(['user_id' => $user_id, 'product_id' => $product_id])
+        //     ->where('product_id', $product_id)
+        //     ->first();
+
+        $cart = $this->_unitOfWork->cart()->get("user_id = $user_id", "product_id = $product_data[product_id]");
         if ($cart) {
             //San pham da ton tai
-            $cart->count = $count;
-            $cart->price = $price;
-            $cart->save();
+            // $cart->count = $count;
+            // $cart->price = $price;
+            // $cart->save();
+            $cart->count += $product_data['count'];
+            $cart->price = $product_data['price'];
+            $cart->update();
         } else {
             //San pham chua ton tai
-            $cart = new ShoppingCart();
+            // $cart = new ShoppingCart();
+            // $cart->user_id = $user_id;
+            // $cart->product_id = $product_id;
+            // $cart->count = $count;
+            // $cart->price = $price;
+            // $cart->save();
+            // $cart->save();
+            $cart = new \App\Models\ShoppingCart;
             $cart->user_id = $user_id;
-            $cart->product_id = $product_id;
-            $cart->count = $count;
-            $cart->price = $price;
-            $cart->save();
+            $cart->fill($product_data);
             $cart->save();
         }
         return back()->with('msg', 'Add to cart successful');

@@ -29,7 +29,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/categories', [CategoryController::class, 'create']);
 });
 
-Route::prefix('customer')->group(function (){
+Route::prefix('customer')->group(function () {
     Route::get('/cart/{id}', [CartController::class, 'getProductById']);
     Route::get('/cart/plus/{id}', [CartController::class, 'plus']);
     Route::get('/cart/minus/{id}', [CartController::class, 'minus']);

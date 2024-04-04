@@ -5,7 +5,7 @@
 @endif
 <form method="POST" action="{{ route('/cart/add', ['id' => $product->id])}}">
     @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">.
+    <input type="hidden" name="product[product_id]" value="{{ $product->id }}">.
     <div class="card shadow border-0 mt-4 mb-4">
         <div class="row">
             <div class="col-md-6">
@@ -27,7 +27,7 @@
                             <div class="col-12 col-lg-6 offset-lg-1">
                                 <div class="col-12 col-md-6 pb-4">
                                     <h4>Price: {{$product->price}}</h4>
-                                    <input name="price" value="{{$product->price}}" type="hidden">
+                                    <input name="product[price]" value="{{$product->price}}" type="hidden">
                                 </div>
                                 <div class="row ps-2">
                                     <h4 class="text-dark text-opacity-50 pb-2">
@@ -43,7 +43,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-lg-5 col-xl-2">
                                         <div class="d-flex">
-                                            <input min="1" name="count" type="number" class="form-control" style="width: 80px; height: 45px" placeholder="1" />
+                                            <input min="1" name="product[count]" type="number" class="form-control" style="width: 80px; height: 45px" placeholder="1" />
                                         </div>
                                     </div>
                                     <div class="col-md-7 col-lg-7 col-xl-10">
