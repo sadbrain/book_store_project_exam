@@ -59,7 +59,7 @@
                     <a class="btn btn-danger">${lockStatus}</a>
                     </td>
                     <td>
-                        <a class="btn btn-primary">Edit</a>
+                    <a class="btn btn-primary" href="/users/edit/${user.id}">Edit</a>
                         <a class="btn btn-danger">Delete</a>
                     </td>
                 </tr>

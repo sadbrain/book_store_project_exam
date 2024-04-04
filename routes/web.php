@@ -21,6 +21,7 @@ use App\Http\Controllers\Customer\CartController;
 //     return view('welcome');
 // });
 Route::get("/", [HomeController::class, "index"]);
+Route::get('/users/edit/{id}', [UserController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

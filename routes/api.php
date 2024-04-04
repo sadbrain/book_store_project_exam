@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
     Route::post('/categories', [CategoryController::class, 'create']); 
     Route::get('/users/getall', [UserController::class, 'getAll']);
+    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 });
 
 Route::prefix('customer')->group(function () {

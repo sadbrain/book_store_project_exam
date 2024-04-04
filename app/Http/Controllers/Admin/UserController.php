@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use Exception;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+// use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +64,35 @@ class UserController extends AdminController
         ->with('role')
         ->get()->all();
         return response()->json(["data" => $users]);
+    }
+
+    
+    public function show($id){
+        $roles = $this->_unitOfWork->role()->get_all();
+        $roles = $roles->get()->all();
+        $user = $this->_unitOfWork->user()->get("id = $id");
+         return view ('admin/user/update', compact(['user', 'roles']));
+    }
+
+    // public function update (Request $request){
+
+    //     $user = $request->input('user');
+    //     $user = $this->_unitOfWork->user()->get("id = {$user['id']}");
+    //     $user->fill($user);
+    //     $this->_unitOfWork->user()->update($user);
+    //     session()->flash('message.success', 'Update use to cart successful');
+    //     return back();
+    // }
+
+    public function update(Request $request)
+    {
+        $userData = $request->input('user');
+        $user = $this->_unitOfWork->user()->get("id = {$userData['id']}");
+        $user->fill($userData);
+        $this->_unitOfWork->user()->update($user);
+        
+        session()->flash('message.success', 'Update user cart successful');
+        return back();
     }
    
 }
