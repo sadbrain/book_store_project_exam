@@ -43,6 +43,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
     Route::get('/users', [UserController::class, 'index']);
+    Route::post('/user/change-account-status/{id}', [UserController::class, 'lock']);
+
 
     Route::get('/order', [OrderController::class, 'index']);
     Route::get('/order/detail/{id}', [OrderController::class, 'detail']);

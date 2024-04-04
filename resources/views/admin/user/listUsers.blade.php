@@ -46,7 +46,6 @@
             <tbody>
         `;
             users.forEach(user => {
-                let lockStatus = user.lock === 1?'Active':'Locked';
                 html += `
                 <tr>
                     <th scope="row">${user.id}</th>
@@ -56,11 +55,20 @@
                     <td>${user.role? user.role.name: ''}</td>
                     <td>${user.company ? user.company.name : ''}</td>
                     <td>
-                    <a class="btn btn-danger">${lockStatus}</a>
+                    
+                    <form method="post" action="/admin/user/change-account-status/${user.id}" data-user-id="${user.id}">
+                    @csrf
+                    <input type="hidden" name="user[id]" value="${user.id}">
+                    <button type="submit" class="btn btn-link" data-toggle="collapse" data-target="#accountCollapse" aria-expanded="true"               aria-controls="accountCollapse" data-open-icon="fa-lock-open" data-lock-icon="fa-lock">
+                        <i id="accountIcon" class="fas ${user.lock == 1 ? 'fa-lock-open' : 'fa-lock'} mr-2"></i> Tài khoản
+                        <input type="hidden" name="user[lock]" value="${user.lock}">
+                    </button>
+                    </form>
                     </td>
+
                     <td>
                     <a class="btn btn-primary" href="/users/edit/${user.id}">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
+                    <a class="btn btn-danger"  onclick="deleteUser(${user.id})">Delete</a>
                     </td>
                 </tr>
             `;
@@ -73,5 +81,74 @@
         .catch(error => {
             console.error('Error fetching data Users: ', error);
         });
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var accountIcon = document.getElementById('accountIcon');
+        var openIconClass = accountIcon.dataset.openIcon;
+        var lockIconClass = accountIcon.dataset.lockIcon;
+        var userId = accountIcon.dataset.userId; // Lấy id của người dùng từ thuộc tính data
+
+        if (accountIcon.classList.contains(openIconClass)) {
+            accountIcon.classList.remove(openIconClass);
+            accountIcon.classList.add(lockIconClass);
+        } else {
+            accountIcon.classList.remove(lockIconClass);
+            accountIcon.classList.add(openIconClass);
+        }
+
+        // Gửi yêu cầu AJAX để thay đổi dữ liệu lock
+        fetch(`/admin/user/change-account-status/${userId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý phản hồi từ máy chủ (nếu cần)
+                console.log(data);
+
+                // Thay đổi trạng thái lock trên giao diện dựa trên phản hồi từ máy chủ
+                if (data && data.data && data.data.lock) {
+                    accountIcon.classList.remove(openIconClass);
+                    accountIcon.classList.add(lockIconClass);
+                } else {
+                    accountIcon.classList.remove(lockIconClass);
+                    accountIcon.classList.add(openIconClass);
+                }
+
+                // Tải lại trang sau khi nhận được phản hồi từ máy chủ
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error changing account status: ', error);
+            });
+
+        // Ẩn/hiện nội dung khi nhấp vào nút Tài khoản
+        var accountCollapse = document.getElementById('accountCollapse');
+        if (accountCollapse.classList.contains('show')) {
+            accountCollapse.classList.remove('show');
+        } else {
+            accountCollapse.classList.add('show');
+        }
+    });
+
+    function deleteUser(userId){
+        if(confirm('Are you sure to delete this user?')){
+            fetch(`http://127.0.0.1:8000/api/admin/user/delete/${userId}`,{
+                method: "DELETE"
+            })
+            .then(response =>{
+                if (response.ok){
+                    console.log("User delete Success")
+                    window.location.reload();
+                }else{
+                    console.log("error")
+                }
+            })
+            .catch(error => {
+                console.error("Error: ", error)
+            })
+        }
+    }
 </script>
 @endsection

@@ -30,6 +30,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/categories', [CategoryController::class, 'create']); 
     Route::get('/users/getall', [UserController::class, 'getAll']);
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/delete/{id}',[UserController::class, 'delete']);
+
+    
 });
 
 Route::prefix('customer')->group(function () {
