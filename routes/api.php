@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/delete/{id}',[UserController::class, 'delete']);
 
+
     
 });
 

@@ -60,14 +60,13 @@
                     @csrf
                     <input type="hidden" name="user[id]" value="${user.id}">
                     <button type="submit" class="btn btn-link" data-toggle="collapse" data-target="#accountCollapse" aria-expanded="true"               aria-controls="accountCollapse" data-open-icon="fa-lock-open" data-lock-icon="fa-lock">
-                        <i id="accountIcon" class="fas ${user.lock == 1 ? 'fa-lock-open' : 'fa-lock'} mr-2"></i> Tài khoản
+                        <i id="accountIcon" class="fas ${user.lock == 0 ? 'fa-lock-open' : 'fa-lock'} mr-2"></i> Tài khoản
                         <input type="hidden" name="user[lock]" value="${user.lock}">
                     </button>
                     </form>
                     </td>
-
                     <td>
-                    <a class="btn btn-primary" href="/users/edit/${user.id}">Edit</a>
+                    <a class="btn btn-primary" href="/admin/users/edit/${user.id}">Edit</a>
                     <a class="btn btn-danger"  onclick="deleteUser(${user.id})">Delete</a>
                     </td>
                 </tr>

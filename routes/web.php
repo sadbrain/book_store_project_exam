@@ -21,7 +21,7 @@ use App\Http\Controllers\Customer\CartController;
 //     return view('welcome');
 // });
 Route::get("/", [HomeController::class, "index"]);
-Route::get('/users/edit/{id}', [UserController::class, 'show']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -42,8 +42,10 @@ Route::prefix('customer')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
-    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/user/change-account-status/{id}', [UserController::class, 'lock']);
+    Route::get('/users/edit/{id}', [UserController::class, 'show']);
+
 
 
     Route::get('/order', [OrderController::class, 'index']);

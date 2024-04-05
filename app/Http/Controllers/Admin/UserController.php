@@ -86,7 +86,7 @@ class UserController extends AdminController
         $user->fill($userData);
         $this->_unitOfWork->user()->update($user);
         session()->flash('message.success', 'Update user cart successful');
-        return view('admin/user/listUsers');
+        return redirect()->route('users');
     }
 
     public function lock(Request $request)
@@ -95,7 +95,7 @@ class UserController extends AdminController
         $user = $this->_unitOfWork->user()->get("id = {$userData['id']}");
         $user->fill($userData);
         if ($user) {
-            if ($user->lock == 1) {
+            if ($user->lock) {
                 $user->lock = 0;
             } else {
                 $user->lock = 1;
@@ -114,7 +114,8 @@ class UserController extends AdminController
         return view('admin/user/listUsers');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $user = $this->_unitOfWork->user()->get("id = $id");
         $user->delete();
         session()->flash('message.success', 'Delete account successful');
