@@ -27,8 +27,8 @@ class RegisteredUserController extends Controller
     public function create()
     {
 
-        $companies = $this->_unitOfWork->company()->get_all();
-        $roles = $this->_unitOfWork->role()->get_all();
+        $companies = $this->_unitOfWork->company()->get_all()->get()->all();
+        $roles = $this->_unitOfWork->role()->get_all()->get()->all();
         return view('auth.register', compact('companies', 'roles'));
     }
 

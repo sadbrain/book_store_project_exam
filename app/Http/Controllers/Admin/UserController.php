@@ -23,8 +23,8 @@ class UserController extends AdminController
             abort(403, 'Unauthorized action.');
         }
 
-        $companies = $this->_unitOfWork->company()->get_all();
-        $roles = $this->_unitOfWork->role()->get_all();
+        $companies = $this->_unitOfWork->company()->get_all()->get()->all();
+        $roles = $this->_unitOfWork->role()->get_all()->get()->all();
         return view('/admin/user/create', compact('companies', 'roles'));
     }
     public function registerPost(Request $request){

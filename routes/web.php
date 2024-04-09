@@ -36,7 +36,9 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
     Route::get('/cart/list', [CartController::class, "getAllFromCart"])->name('listCart');
     Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
+  
     Route::get('/product/detail/{id}', [ProductControllers::class, 'show']);
+
 
 
 });

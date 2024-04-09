@@ -27,13 +27,13 @@ abstract class Repository implements IRepository{
             $this->get_model()
         );
     }
-    public function get_all(?string $filter = null): array{
+    public function get_all(?string $filter = null) {
         $query = $this->_model::query();
         if (!is_null($filter)) {
             $query->whereRaw($filter);
         }
 
-        return $query->get()->all();
+        return $query;
     }
 
     public function get(string $filter){

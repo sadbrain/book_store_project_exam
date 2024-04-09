@@ -41,7 +41,11 @@
                         </li>
 
                         <li class="nav-item">
+
                         <a  class="nav-link" href="{{ route('listCart') }}">Cart</a>
+
+                            <a class="nav-link" href="{{url('/api/customer/listProduct')}}">Books</a>
+
                         </li>
 
                         @if(Auth::user() && Auth::user()->role->name == config("constants.role.user_admin"))
@@ -161,6 +165,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @yield('content')
+            @yield('list_product')
             @extends('shared/_notification')
 
         </main>
