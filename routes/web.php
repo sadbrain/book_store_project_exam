@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\ProductControllers;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,9 +30,16 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->prefix('customer')->group(function () {
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('/cart/add');
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
+    Route::get('/cart/list', [CartController::class, "getAllFromCart"])->name('listCart');
+    Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
+  
+    Route::get('/product/detail/{id}', [ProductControllers::class, 'show']);
+
+
 
 });
 Route::prefix('customer')->group(function () {
@@ -41,6 +49,8 @@ Route::prefix('customer')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
+    Route::get('/users', [UserController::class, 'index']);
+
     Route::get('/order', [OrderController::class, 'index']);
     Route::get('/order/detail/{id}', [OrderController::class, 'detail']);
     Route::post('/order/detail', [OrderController::class, 'detailPost']);

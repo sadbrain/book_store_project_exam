@@ -3,7 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+
+use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\ShoppingCartController;
+
 use App\Http\Controllers\Customer\ProductController;
+
 
 
 /*
@@ -18,9 +23,9 @@ use App\Http\Controllers\Customer\ProductController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::prefix('admin')->group(function () {
     Route::get('/categories', [CategoryController::class, 'getAll']);
     Route::get('/categories/{id}', [CategoryController::class, 'get']);
@@ -30,9 +35,16 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function () {
+
+    Route::get('/cart/{id}', [CartController::class, 'getProductById']);
+    Route::get('/cart/plus/{id}', [CartController::class, 'plus']);
+    Route::get('/cart/minus/{id}', [CartController::class, 'minus']);
+    Route::get('/cart/delete/{id}', [CartController::class, 'deleteFromCart']);
+
     Route::get('/product/getAll', [ProductController::class, 'getAll']);
     Route::get('/product/getByCategory/{id?}', [ProductController::class, 'getByCategory']);
     Route::get('/listProduct', [ProductController::class, 'showProduct']);
     Route::get('/listCategory', [CategoryController::class, 'getAll']);
+
 
 });
