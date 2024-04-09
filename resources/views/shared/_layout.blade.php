@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -49,49 +51,38 @@
                         </li>
 
                         @if(Auth::user() && Auth::user()->role->name == config("constants.role.user_admin"))
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Content Management
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li class="nav-item">
-                                    <a class="dropdown-item">Category</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/product" class="dropdown-item">Product</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item">Company</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/order?status=all" class="dropdown-item">Order</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item">User</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/user/create" class="dropdown-item">Create User</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                            </ul>
-                        </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">Category</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a href="/admin/product" class="dropdown-item">Product</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">Company</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a  href="/admin/order?status=all" class="dropdown-item">Order</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" href="/admin/users" >User</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li class="nav-item">
+                                        <a href="/admin/user/create" class="dropdown-item">Create User</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </li>
                         @endif
 
                     </ul>

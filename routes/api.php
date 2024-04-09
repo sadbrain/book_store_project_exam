@@ -8,6 +8,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ShoppingCartController;
 
 use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Admin\UserController;
 
 
 
@@ -31,7 +32,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/categories/{id}', [CategoryController::class, 'get']);
     Route::delete('/categories/{id}', [CategoryController::class, 'delete']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::post('/categories', [CategoryController::class, 'create']);
+    Route::post('/categories', [CategoryController::class, 'create']); 
+    Route::get('/users/getall', [UserController::class, 'getAll']);
+    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/delete/{id}',[UserController::class, 'delete']);
+
+
+    
 });
 
 Route::prefix('customer')->group(function () {

@@ -23,6 +23,7 @@ use App\Http\Controllers\Customer\ProductControllers;
 // });
 Route::get("/", [HomeController::class, "index"]);
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -36,11 +37,7 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
     Route::get('/cart/list', [CartController::class, "getAllFromCart"])->name('listCart');
     Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
-  
     Route::get('/product/detail/{id}', [ProductControllers::class, 'show']);
-
-
-
 });
 Route::prefix('customer')->group(function () {
     Route::get('/detail/{id}', [HomeController::class, 'detail']);
@@ -49,7 +46,11 @@ Route::prefix('customer')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/user/create', [UserController::class, 'register']);
     Route::post('/user/create', [UserController::class, 'registerPost']);
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::post('/user/change-account-status/{id}', [UserController::class, 'lock']);
+    Route::get('/users/edit/{id}', [UserController::class, 'show']);
     Route::get('/users', [UserController::class, 'index']);
+
 
     Route::get('/order', [OrderController::class, 'index']);
     Route::get('/order/detail/{id}', [OrderController::class, 'detail']);

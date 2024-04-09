@@ -31,6 +31,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        if (Auth::user()->lock) {
+            Auth::guard('web')->logout();
+            abort(403, 'Account is locked');
+        }
 
         return redirect()->intended("/");
     }
