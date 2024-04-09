@@ -78,4 +78,16 @@ abstract class Repository implements IRepository{
             $entityInDb->delete();
         }
     }
+
+    public function find($entity)
+    {
+        $id = $entity["id"] ?? null;
+    
+        if (!is_null($id)) {
+            $entityInDb = $this->_model::find($id);
+            return $entityInDb;
+        }
+    
+        return null;
+    }
 }
