@@ -136,7 +136,7 @@ class CartController extends CustomerController
     {
         $user = Auth::user();
         $user_id = $user->id;
-        $products = $this->_unitOfWork->cart()->get_all("user_id = $user_id");
+        $products = $this->_unitOfWork->cart()->get_all("user_id = $user_id")->get()->all();
         return response()->json(['data' => $products]);
     }
     public function getAllFromCart()
@@ -148,15 +148,17 @@ class CartController extends CustomerController
     {
         $users = Auth::user();
         $user_id = $users->id;
-        $product = $request->input("cart");
+        $product = $request->all();
         $cart = $this->_unitOfWork->cart()->get("user_id = $user_id and product_id = {$product['product_id']}");
         if ($cart) {
             $cart->fill($product);
+            $cart -> price = $this->get_price_based_on_quanity($cart);
             $this->_unitOfWork->cart()->update($cart);
         } else {
             $cart = new \App\Models\ShoppingCart;
             $cart->user_id = $user_id;
             $cart->fill($product);
+            $cart -> price = $this->get_price_based_on_quanity($cart); 
             $this->_unitOfWork->cart()->add($cart);
 
         }

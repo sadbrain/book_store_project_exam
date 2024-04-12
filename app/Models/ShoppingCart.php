@@ -11,9 +11,9 @@ class ShoppingCart extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        'color',
-        'size',
         'quantity',
+        'count',
+        'price',    
         'product_id',
         'user_id',
     ];

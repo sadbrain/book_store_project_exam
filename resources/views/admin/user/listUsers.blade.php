@@ -20,8 +20,6 @@
 
     </tbody>
 </table>
-@endsection
-
 @section('content-scripts')
 <script>
     const table = document.querySelector('.table');
@@ -67,7 +65,7 @@
                     </td>
                     <td>
                     <a class="btn btn-primary" href="/admin/users/edit/${user.id}">Edit</a>
-                    <a class="btn btn-danger"  onclick="deleteUser(${user.id})">Delete</a>
+                    <a class="btn btn-danger"  onclick="Delete('/api/admin/user/delete/${user.id}')">Delete</a>
                     </td>
                 </tr>
             `;
@@ -149,5 +147,38 @@
             })
         }
     }
+
+    
+    function Delete(url) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    type: 'DELETE',
+                    data: {_token: "{{ csrf_token() }}"},
+                    success: function (data) {
+                        // dataTable.ajax.reload();
+                        window.location.reload();
+
+                        toastr.success(data.message);
+
+                    }
+                })
+                // window.location.reload();
+
+            }
+        })
+    }
 </script>
+@endsection 
 @endsection
+

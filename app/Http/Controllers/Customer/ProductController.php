@@ -21,10 +21,7 @@ class ProductController extends CustomerController
         // return view('customer/list-product', ['products' => $products]);
     }
 
-    public function showProduct()
-    {
-        return view('customer/list-product');
-    }
+
 
     public function getByCategory($id = null)
     {

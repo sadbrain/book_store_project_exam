@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
-use App\Http\Controllers\Customer\ProductControllers;
+use App\Http\Controllers\Customer\ProductControllers as ProductCus;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,16 +31,17 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->prefix('customer')->group(function () {
-    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('/cart/add');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('/cart/add');
     Route::get('/cart/summary', [CartController::class, 'summary']);
     Route::post('/cart/summary', [CartController::class, 'summaryPost']);
     Route::get('/cart/orderConfirmation/{id}', [CartController::class, 'orderConfirmation']);
     Route::get('/cart/list', [CartController::class, "getAllFromCart"])->name('listCart');
     Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
-    Route::get('/product/detail/{id}', [ProductControllers::class, 'show']);
+    Route::get('/product/detail/{id}', [ProductController::class, 'show']);
 });
 Route::prefix('customer')->group(function () {
     Route::get('/detail/{id}', [HomeController::class, 'detail']);
+    Route::get('/listProduct', [ProductCus::class, 'showProduct']);
 
 });
 Route::middleware('auth')->prefix('admin')->group(function () {

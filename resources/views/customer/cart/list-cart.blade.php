@@ -20,6 +20,7 @@
                 </form>
             </table>
         </div>
+        <button class="btn btn-primary"><a class="text-white" href="/customer/cart/summary">sumary</a></button>
     </div>
 </div>
 @endsection
@@ -98,9 +99,7 @@
                                             <p class="lead fw-normal mb-2">${name}</p>
                                             <p><span class="text-muted">Author: </span>${author}</p>
                                         </div>
-                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
-                                        </div>
+                            
                                     </div>
                                 </div>
                             </div>
@@ -205,6 +204,7 @@
             })
     }
 </script>
+
 @endsection
 
 </html>

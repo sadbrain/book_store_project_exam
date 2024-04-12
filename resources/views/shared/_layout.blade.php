@@ -16,11 +16,10 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Đường dẫn asset() sẽ tự động tạo ra đường dẫn đúng đối với public/css/styles.css -->
 </head>
 
@@ -28,12 +27,12 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a href="/" class="navbar-brand">BookStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a href="/" class="navbar-brand" style="position:relative; top:5px">BookStore</a>
+                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav me-auto">
+                </button> --}}
+                <div class="navbar-collapse collapse row justify-content-between">
+                    <ul class="navbar-nav me-auto col-10 d-block" style="position:relative; top:20px">
                         <li class="nav-item">
                             <a href="/" class="nav-link">Home</a>
                         </li>
@@ -43,11 +42,10 @@
                         </li>
 
                         <li class="nav-item">
-
-                        <a  class="nav-link" href="{{ route('listCart') }}">Cart</a>
-
-                            <a class="nav-link" href="{{url('/api/customer/listProduct')}}">Books</a>
-
+                           <a class="nav-link" href="{{url('/customer/listProduct')}}">Books</a>
+                       </li>
+                        <li class="nav-item">
+                             <a  class="nav-link" href="{{ route('listCart') }}">Cart</a>
                         </li>
 
                         @if(Auth::user() && Auth::user()->role->name == config("constants.role.user_admin"))
@@ -86,64 +84,57 @@
                         @endif
 
                     </ul>
-
-                    <ul class="navbar-nav">
-                        @if (Route::has('login'))
-                        @auth
-                        <li class="nav-item">
+                    <ul class="navbar-nav col-2 d-block " style="position:relative; left:100px">
+                        <li class="col-12 nav-item text-end">
                             {{-- <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a> --}}
-                            @if(Auth::check())
-                        <li class="nav-item dropdown" style="position: relative">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ Auth::user()->avatar }}" alt="User Avatar" style="width:50px;height: 50px;border-radius:50%;">
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position:absolute;left:-150%">
-                                <li class="nav-item">
-                                    <a class="dropdown-item">Name: <span>{{Auth::user()->name}}</span></a>
-                                    <a class="dropdown-item">mail: <span>{{Auth::user()->email}}</span></a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+                             @if(Auth::user())
+                                <li class="nav-item dropdown" style="position: relative">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="{{ Auth::user()->avatar }}" alt="User Avatar" style="width:50px;height: 50px;border-radius:50%;">
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position:absolute;left:-150%">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item">Name: <span>{{Auth::user()->name}}</span></a>
+                                            <a class="dropdown-item">mail: <span>{{Auth::user()->email}}</span></a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
 
-                                <li class="nav-item">
-                                    <a class="dropdown-item">Profile</a>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item">Profile</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/admin/order?status=all" class="dropdown-item">Order Management</a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/admin/order?status=all" class="dropdown-item">Order Management</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li class="nav-item">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                            </ul>
+                             @else
                         </li>
-                        @endif
-                        </li>
-                        @else
-                        <li class="nav-item">
-                            <a href="{{ route('login') }}" class="nav-link">Log in</a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                            </li>
 
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a href="{{ route('register') }}" class="nav-link">Register</a>
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="nav-link">Register</a>
 
-                        </li>
+                            </li>
 
-                        @endif
-                        @endauth
                         @endif
 
                     </ul>
@@ -156,7 +147,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @yield('content')
-            @yield('list_product')
+            {{-- @yield('list_product') --}}
             @extends('shared/_notification')
 
         </main>

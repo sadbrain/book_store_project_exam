@@ -1,7 +1,7 @@
 @extends('shared/_layout')
 
 @section('content')
-<form action="/customer/cart/addToCart" method="post">
+<form action="/customer/cart/add" method="post">
     @csrf
     <input hidden name="id" value={{$product->id}} />
     {{-- <input hidden asp-for="Id" /> --}}
@@ -81,6 +81,7 @@
                                           id="inputGroup-sizing-default">
                                         Count
                                     </span>
+                                    <input hidden name="product_id" value="{{$product->id}}">
                                     <input name="count" type="number" value="1" class="form-control text-end"
                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
 

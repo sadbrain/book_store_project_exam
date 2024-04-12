@@ -30,7 +30,7 @@ class UserController extends AdminController
     }
     public function registerPost(Request $request)
     {
-        if (Auth::user()->role->name != config("constants.role.user_admin") || Auth::user()->role->name != config("constants.role.user_employee")) {
+        if (Auth::user()->role->name != config("constants.role.user_admin") && Auth::user()->role->name != config("constants.role.user_employee")) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -51,7 +51,7 @@ class UserController extends AdminController
 
         if ($request->role_id == $company_role_db->id) $user_input['company_id'] = $request->company_id;
 
-        $user = User::create($user_input);
+        $user = (new \App\Models\User)::create($user_input);
         session()->flash('message.success', 'User created successfully');
         return redirect("/admin/user/create");
     }
@@ -118,7 +118,6 @@ class UserController extends AdminController
     {
         $user = $this->_unitOfWork->user()->get("id = $id");
         $user->delete();
-        session()->flash('message.success', 'Delete account successful');
-        return view('admin/user/listUsers');
+        return response() -> json([ "success" => true, "message" => "User deleted successfully" ]);
     }
 }

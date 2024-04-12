@@ -186,7 +186,7 @@ $user_role = Auth::user()->role->name;
 
                         </div>
 
-                        <div class="col-12 col-lg-5 offset-lg-1">
+                        <div class="col-12 col-lg-5">
                             <h4 class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="text-primary">Order Summary</span>
                             </h4>

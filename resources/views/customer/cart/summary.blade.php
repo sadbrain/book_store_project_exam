@@ -14,7 +14,7 @@
 						</h5>
 					</div>
 					<div class="col-6 text-end">
-						<a href="/customer/cart" class="btn btn-outline-danger btn-sm">Back to Cart</a>
+						<a href="/customer/cart/list" class="btn btn-outline-danger btn-sm">Back to Cart</a>
 					</div>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 							</div>
 							
 						</div>
-						<div class="col-12 col-lg-5 offset-lg-1">
+						<div class="col-12 col-lg-5">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
 								<span class="text-info">Order Summary:</span>
 							</h4>
