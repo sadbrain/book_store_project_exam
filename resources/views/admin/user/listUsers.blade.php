@@ -54,10 +54,10 @@
                     <td>${user.company ? user.company.name : ''}</td>
                     <td>
                     
-                    <form method="post" action="/admin/user/change-account-status/${user.id}" data-user-id="${user.id}">
+                    <form method="post" action="/api/admin/user/change-account-status/${user.id}" data-user-id="${user.id}">
                     @csrf
                     <input type="hidden" name="user[id]" value="${user.id}">
-                    <button type="submit" class="btn btn-link" data-toggle="collapse" data-target="#accountCollapse" aria-expanded="true"               aria-controls="accountCollapse" data-open-icon="fa-lock-open" data-lock-icon="fa-lock">
+                    <button type="submit" class="btn btn-link" data-toggle="collapse" data-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse" data-open-icon="fa-lock-open" data-lock-icon="fa-lock">
                         <i id="accountIcon" class="fas ${user.lock == 0 ? 'fa-lock-open' : 'fa-lock'} mr-2"></i> Tài khoản
                         <input type="hidden" name="user[lock]" value="${user.lock}">
                     </button>
@@ -96,7 +96,7 @@
         }
 
         // Gửi yêu cầu AJAX để thay đổi dữ liệu lock
-        fetch(`/admin/user/change-account-status/${userId}`, {
+        fetch(`/api/admin/user/change-account-status/${userId}`, {
                 method: 'POST'
             })
             .then(response => response.json())

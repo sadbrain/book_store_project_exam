@@ -36,6 +36,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/users/getall', [UserController::class, 'getAll']);
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user/delete/{id}',[UserController::class, 'delete']);
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::post('/user/change-account-status/{id}', [UserController::class, 'lock']);
+
+
+
 
 
     
