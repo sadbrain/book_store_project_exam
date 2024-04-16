@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+
     <!-- Latest compiled JavaScript -->
     <!-- Đường dẫn asset() sẽ tự động tạo ra đường dẫn đúng đối với public/css/styles.css -->
 </head>
@@ -42,98 +43,113 @@
                         </li>
 
                         <li class="nav-item">
-                           <a class="nav-link" href="{{url('/customer/listProduct')}}">Books</a>
-                       </li>
+                            <a class="nav-link" href="{{url('/customer/listProduct')}}">Books</a>
+                        </li>
                         <li class="nav-item">
-                             <a  class="nav-link" href="{{ route('listCart') }}">Cart</a>
+                            <a class="nav-link" href="{{ route('listCart') }}">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('favorite') }}">Favorite</a>
                         </li>
 
                         @if(Auth::user() && Auth::user()->role->name == config("constants.role.user_admin"))
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Content Management
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">Category</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a href="/admin/product" class="dropdown-item">Product</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item">Company</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a  href="/admin/order?status=all" class="dropdown-item">Order</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" href="/admin/users" >User</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li class="nav-item">
-                                        <a href="/admin/user/create" class="dropdown-item">Create User</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                </ul>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Content Management
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="nav-item">
+                                    <a class="dropdown-item">Category</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/product" class="dropdown-item">Product</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item">Company</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/order?status=all" class="dropdown-item">Order</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" href="/admin/users">User</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/user/create" class="dropdown-item">Create User</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            </ul>
+                        </li>
                         @endif
 
                     </ul>
                     <ul class="navbar-nav col-2 d-block " style="position:relative; left:100px">
                         <li class="col-12 nav-item text-end">
                             {{-- <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a> --}}
-                             @if(Auth::user())
-                                <li class="nav-item dropdown" style="position: relative">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img src="{{ Auth::user()->avatar }}" alt="User Avatar" style="width:50px;height: 50px;border-radius:50%;">
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position:absolute;left:-150%">
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">Name: <span>{{Auth::user()->name}}</span></a>
-                                            <a class="dropdown-item">mail: <span>{{Auth::user()->email}}</span></a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">Profile</a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/admin/order?status=all" class="dropdown-item">Order Management</a>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                    </ul>
+                            @if(Auth::user())
+                        <li class="nav-item dropdown" style="position: relative">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ Auth::user()->avatar }}" alt="User Avatar" style="width:50px;height: 50px;border-radius:50%;">
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="position:absolute;left:-150%">
+                                <li class="nav-item">
+                                    <a class="dropdown-item">Name: <span>{{Auth::user()->name}}</span></a>
+                                    <a class="dropdown-item">mail: <span>{{Auth::user()->email}}</span></a>
                                 </li>
-                             @else
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="dropdown-item">Profile</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/order?status=all" class="dropdown-item">Order Management</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            </ul>
                         </li>
-                            <li class="nav-item">
-                                <a href="{{ route('login') }}" class="nav-link">Log in</a>
-                            </li>
+                        @else
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link">Log in</a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('register') }}" class="nav-link">Register</a>
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="nav-link">Register</a>
 
-                            </li>
+                        </li>
 
                         @endif
 

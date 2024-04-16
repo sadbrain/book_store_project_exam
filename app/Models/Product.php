@@ -24,28 +24,23 @@ class Product extends Model
         'price100',
         'category_id',
     ];
+    public function favorites()
+    {
+        return $this->belongsToMany(Favorite::class);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class, "category_id");
     }
-
-    // public function inventory()
-    // {
-    //     return $this->belongsTo(Inventory::class, "inventory_id");
-    // }
-
-    // public function product_images(){
-    //     return $this->hasMany(ProductImage::class, "product_id");
-    // }
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($product){
+        static::creating(function ($product) {
             $product->slug = Str::slug($product->name);
         });
 
-        static::updating(function ($product){
+        static::updating(function ($product) {
             $product->slug = Str::slug($product->name);
         });
     }

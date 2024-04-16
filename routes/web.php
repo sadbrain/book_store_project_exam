@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\FavoriteController;
 use App\Http\Controllers\Customer\ProductControllers as ProductCus;
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/list', [CartController::class, "getAllFromCart"])->name('listCart');
     Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
     Route::get('/product/detail/{id}', [ProductController::class, 'show']);
+    Route::get("/favorite", [FavoriteController::class, 'index'])->name('favorite');
 });
 Route::prefix('customer')->group(function () {
     Route::get('/detail/{id}', [HomeController::class, 'detail']);

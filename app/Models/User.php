@@ -11,6 +11,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     public function role()
     {
         return $this->belongsTo(Role::class, "role_id");
@@ -56,6 +60,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
 }
