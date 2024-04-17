@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Admin\UserController;
@@ -74,4 +75,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/product/create', [ProductController::class, 'create']);
     Route::post('/product/create', [ProductController::class, 'createPost']);
     Route::post('/product/delete/{id}', [ProductController::class, 'deletePost']);
+
+    Route::get('/category', [CategoryController::class, 'index'])->name('categoryIndex');
+    Route::get('/category/edit/{id}', [CategoryController::class, 'edit']);
+    Route::get('/category/create', [CategoryController::class, 'add']);
+
+
 });
