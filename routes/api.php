@@ -30,7 +30,7 @@ use App\Http\Controllers\Admin\UserController;
 Route::prefix('admin')->group(function () {
     Route::get('/categories', [CategoryController::class, 'getAll']);
     Route::get('/categories/{id}', [CategoryController::class, 'get']);
-    Route::delete('/categories/{id}', [CategoryController::class, 'delete']);
+    Route::post('/categories/{id}', [CategoryController::class, 'delete']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
     Route::post('/categories', [CategoryController::class, 'create']); 
     Route::get('/users/getall', [UserController::class, 'getAll']);
@@ -38,12 +38,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/user/delete/{id}',[UserController::class, 'delete']);
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/user/change-account-status/{id}', [UserController::class, 'lock']);
-
-
-
-
-
-    
+ 
 });
 
 Route::prefix('customer')->group(function () {

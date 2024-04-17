@@ -56,7 +56,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li class="nav-item">
-                                        <a class="dropdown-item">Category</a>
+                                        <a href="/admin/category" class="dropdown-item">Category</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
