@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+    <!-- Đường dẫn đến tệp Bootstrap JavaScript và jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -37,11 +40,6 @@
                         <li class="nav-item">
                             <a href="/" class="nav-link">Home</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link">Privacy</a>
-                        </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/customer/listProduct')}}">Books</a>
                         </li>
@@ -163,6 +161,9 @@
 
     <div class="container">
         <main role="main" class="pb-3">
+            <!-- // slider  -->
+
+
             @yield('content')
             {{-- @yield('list_product') --}}
             @extends('shared/_notification')

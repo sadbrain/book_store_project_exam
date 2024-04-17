@@ -53,8 +53,4 @@ Route::prefix('customer')->group(function () {
     Route::get('/product/getAll', [ProductController::class, 'getAll']);
     Route::get('/product/getByCategory/{id?}', [ProductController::class, 'getByCategory']);
     Route::get('/listCategory', [CategoryController::class, 'getAll']);
-
-    Route::post("/favorite/{id}", [FavoriteController::class, 'add'])->name("addFavoriteItem");
-
-
 });

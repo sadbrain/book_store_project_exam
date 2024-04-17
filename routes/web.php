@@ -41,6 +41,9 @@ Route::middleware('auth')->prefix('customer')->group(function () {
     Route::get('/cart/show', [CartController::class, 'showItemIntoCart']);
     Route::get('/product/detail/{id}', [ProductController::class, 'show']);
     Route::get("/favorite", [FavoriteController::class, 'index'])->name('favorite');
+    Route::post("/favorite/{id}", [FavoriteController::class, 'add'])->name("addFavoriteItem");
+    Route::get("favorite/list-favorite",[FavoriteController::class, 'listFavoriteItem'])->name("listFavoriteItem");
+
 });
 Route::prefix('customer')->group(function () {
     Route::get('/detail/{id}', [HomeController::class, 'detail']);
