@@ -5,7 +5,13 @@
     {{ session('msg') }}
 </div>
 @endif
-<h1 class="text-center mb-10">Cart</h1>
+<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="text-white py-2">Cart</h1>
+        </div>
+    </div>
+</div>
 <div class="d-flex justify-content-center align-items-center ">
     <div class="col">
         <div class="table-responsive">
