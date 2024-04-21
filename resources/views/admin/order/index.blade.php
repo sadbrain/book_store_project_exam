@@ -6,25 +6,23 @@ $inprocess = "text-primary";
 $completed = "text-primary";
 $approved = "text-primary";
 $all = "text-primary";
-switch ($status)
-    {
-        case "pending":
-            $pending = "active text-white bg-primary";
-            break;
-        case "inprocess":
-            $inprocess = "active text-white bg-primary";
-            break;
-        case "completed":
-            $completed = "active text-white bg-primary";
-            break;
-        case "approved":
-            $approved = "active text-white bg-primary";
-            break;
-        default:
-            $all = "active text-white bg-primary";
-            break;
-
-    }
+switch ($status) {
+    case "pending":
+        $pending = "active text-white bg-primary";
+        break;
+    case "inprocess":
+        $inprocess = "active text-white bg-primary";
+        break;
+    case "completed":
+        $completed = "active text-white bg-primary";
+        break;
+    case "approved":
+        $approved = "active text-white bg-primary";
+        break;
+    default:
+        $all = "active text-white bg-primary";
+        break;
+}
 ?>
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
@@ -40,19 +38,19 @@ switch ($status)
             <span></span>
             <ul class="list-group list-group-horizontal-sm">
                 <a style="text-decoration:none;" href="/admin/order?status=inprocess">
-                <li class="list-group-item {{$inprocess}}">In Process</li>
+                    <li class="list-group-item {{$inprocess}}">In Process</li>
                 </a>
                 <a style="text-decoration:none;" href="/admin/order?status=pending">
-                <li class="list-group-item {{$pending}}">Payment Pending</li>
+                    <li class="list-group-item {{$pending}}">Payment Pending</li>
                 </a>
                 <a style="text-decoration:none;" href="/admin/order?status=completed">
-                <li class="list-group-item {{$completed}}">Completed</li>
+                    <li class="list-group-item {{$completed}}">Completed</li>
                 </a>
                 <a style="text-decoration:none;" href="/admin/order?status=approved">
-                <li class="list-group-item {{$approved}}">Approved</li>
+                    <li class="list-group-item {{$approved}}">Approved</li>
                 </a>
                 <a style="text-decoration:none;" href="/admin/order?status=all">
-                <li class="list-group-item {{$all}}">All</li>
+                    <li class="list-group-item {{$all}}">All</li>
                 </a>
             </ul>
         </div>
@@ -81,7 +79,7 @@ switch ($status)
                         {{$order->phone}}
                     </td>
                     <td>
-                        {{$order->user->email}}
+                        {{$order->user != null ? $order->user->email : ""}}
                     </td>
                     <td>
                         {{$order->order_status}}
@@ -99,9 +97,9 @@ switch ($status)
                 </tr>
                 @endforeach
             </tbody>
-        </table>   
+        </table>
     </div>
 
-    
+
 </div>
 @endsection
